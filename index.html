@@ -769,7 +769,7 @@
         let currentAlbum = [];
         let currentImageIndex = 0;
 
-        // Navigatsiooni funktsioonid
+          // Navigatsiooni funktsioonid
         function showSection(sectionName) {
             // Peida kõik sektsioonid
             document.getElementById('home-section').classList.add('hidden');
@@ -777,4 +777,179 @@
             document.getElementById('gallery-section').classList.add('hidden');
             
             // Näita valitud sektsioon
-            document.getElementById(sectionName + '-section').
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Uuenda navigatsioonilinke
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Leia õige link ja märgi aktiivseks
+            if (sectionName === 'home') {
+                document.querySelector('.nav-links a:first-child').classList.add('active');
+            } else if (sectionName === 'albums') {
+                document.querySelector('.nav-links a:last-child').classList.add('active');
+            }
+        }
+
+        // Piltide filtreerimine kategooria järgi
+        function getPhotosByCategory(category) {
+            if (category === 'all') {
+                return photoDatabase.photos;
+            }
+            return photoDatabase.photos.filter(photo => photo.categories.includes(category));
+        }
+
+        // Albumi avamise funktsioon
+        function openAlbum(albumCategory) {
+            const photos = getPhotosByCategory(albumCategory);
+            currentAlbum = photos;
+            
+            // Uuenda galerii pealkirja
+            const albumTitle = getAlbumTitle(albumCategory);
+            document.getElementById('gallery-title').textContent = albumTitle;
+            
+            // Loo galerii
+            createGallery(photos);
+            
+            // Näita galerii sektsioon
+            showSection('gallery');
+        }
+
+        // Galerii loomine
+        function createGallery(photos) {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => openLightbox(index);
+                
+                const img = document.createElement('img');
+                img.src = photo.src;
+                img.alt = photo.alt;
+                img.loading = 'lazy';
+                
+                galleryItem.appendChild(img);
+                galleryGrid.appendChild(galleryItem);
+            });
+        }
+
+        // Lightbox funktsioonid
+        function openLightbox(imageIndex) {
+            currentImageIndex = imageIndex;
+            const photo = currentAlbum[imageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+            document.getElementById('lightbox').classList.add('active');
+            
+            // Keela body scrollimine
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentAlbum.length;
+            const photo = currentAlbum[currentImageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+        }
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + currentAlbum.length) % currentAlbum.length;
+            const photo = currentAlbum[currentImageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+        }
+
+        // Albumi pealkirja määramine
+        function getAlbumTitle(category) {
+            const titles = {
+                'all': 'Kõik Pildid',
+                'bw': 'Mustvalged',
+                'film': 'Filmifotod',
+                'portraits': 'Portreed',
+                'landscapes': 'Maastikud',
+                'street': 'Tänavafoto'
+            };
+            return titles[category] || 'Tundmatu album';
+        }
+
+        // Klaviatuuri navigatsioon lightbox'is
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    previousImage();
+                }
+            }
+        });
+
+        // Lightbox sulgemine klõpsuga taustal
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Smooth scroll animatsioonid
+        function addScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0.2s';
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Käivita animatsioonid lehe laadimisel
+        document.addEventListener('DOMContentLoaded', addScrollAnimations);
+
+        // Navigatsiooni läbipaistvuse muutmine scrollimisel
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Piltide eellaadimine parema jõudluse jaoks
+        function preloadImages() {
+            photoDatabase.photos.forEach(photo => {
+                const img = new Image();
+                img.src = photo.src;
+            });
+        }
+
+        // Käivita eellaadimine
+        window.addEventListener('load', preloadImages);
+    </script>
+</body>
+</html>
