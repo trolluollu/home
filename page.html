@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotoportfoolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Udune navigatsioon */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Põhisisu */
+        .content {
+            margin-top: 80px;
+            padding: 2rem;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #333333 0%, #000000 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            border: 1px solid #444;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(135deg, #444444 0%, #111111 100%);
+        }
+
+        /* Fotoalbumite sektsioon */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .album-card {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .album-card:hover .album-cover {
+            transform: scale(1.1);
+        }
+
+        .album-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .album-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-subtitle {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Galerii sektsioon */
+        .gallery-section {
+            padding: 2rem 0;
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: -80px;
+        }
+
+        .lightbox-next {
+            right: -80px;
+        }
+
+        .lightbox-info {
+            position: absolute;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        /* Peidetud sektsioonid */
+        .hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo {
+    color: #FF6600; /* oranž värv */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 24px; /* valikuline */
+    cursor: pointer;
+}
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .albums-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .lightbox-nav {
+                display: none;
+            }
+
+            .lightbox-close {
+                top: 20px;
+                right: 20px;
+            }
+
+            .lightbox-info {
+                bottom: 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Laadimise animatsioon */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- Udune navigatsioon -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="showSection('home')">
+                
+                MINU LOGO
+            </div>
+            <ul class="nav-links">
+                <li><a class="active" onclick="showSection('home')">Avaleht</a></li>
+                <li><a onclick="showSection('albums')">Fotoalbumid</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <!-- Avaleht -->
+        <section id="home-section" class="section">
+            <div class="hero fade-in">
+                <h1>Tere tulemast</h1>
+                <p>
+                    Olen kirjeldus endast - fotograaf, kes jäädvustab elu kauneid hetki. 
+                    Minu töö keskendub [lisa siia oma eriala/stiil], püüdes kinni 
+                    emotsioone ja lugusid, mis peituvad iga kaadri taga.
+                </p>
+                <div class="cta-button" onclick="showSection('albums')">
+                    Vaata minu tööd
+                </div>
+            </div>
+        </section>
+
+        <!-- Fotoalbumid -->
+        <section id="albums-section" class="section hidden">
+            <h2 class="section-title fade-in">Fotoalbumid</h2>
+            <div class="albums-grid fade-in">
+                
+                <!-- Album 1: Kõik pildid -->
+                <div class="album-card" onclick="openAlbum('all')">
+                    <img src="https://images.unsplash.com/photo-1452457807411-4979b707c5be?w=600&h=600&fit=crop" 
+                         alt="Kõik Pildid" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Kõik Pildid</h3>
+                        <p class="album-subtitle">Täielik kollektsioon</p>
+                    </div>
+                </div>
+
+                <!-- Album 2: Mustvalged -->
+                <div class="album-card" onclick="openAlbum('bw')">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop&sat=-100" 
+                         alt="Mustvalged" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Mustvalged</h3>
+                        <p class="album-subtitle">Klassikaline esteetika</p>
+                    </div>
+                </div>
+
+                <!-- Album 3: Filmifotod -->
+                <div class="album-card" onclick="openAlbum('film')">
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=600&fit=crop" 
+                         alt="Filmifotod" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Filmifotod</h3>
+                        <p class="album-subtitle">Analoogse filmi võlu</p>
+                    </div>
+                </div>
+
+                <!-- Album 4: Portreed -->
+                <div class="album-card" onclick="openAlbum('portraits')">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&fit=crop" 
+                         alt="Portreed" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Portreed</h3>
+                        <p class="album-subtitle">Inimeste lood</p>
+                    </div>
+                </div>
+
+                <!-- Album 5: Maastikud -->
+                <div class="album-card" onclick="openAlbum('landscapes')">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" 
+                         alt="Maastikud" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Maastikud</h3>
+                        <p class="album-subtitle">Looduse ilu</p>
+                    </div>
+                </div>
+
+                <!-- Album 6: Tänavafoto -->
+                <div class="album-card" onclick="openAlbum('street')">
+                    <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=600&fit=crop" 
+                         alt="Tänavafoto" class="album-cover">
+                    <div class="album-overlay">
+                        <h3 class="album-title">Tänavafoto</h3>
+                        <p class="album-subtitle">Linnaelu hetked</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Galerii sektsioon -->
+        <section id="gallery-section" class="section hidden">
+            <div class="gallery-section">
+                <div class="gallery-header">
+                    <h2 class="section-title" id="gallery-title">Galerii</h2>
+                    <div class="back-button" onclick="showSection('albums')">
+                        ← Tagasi albumitesse
+                    </div>
+                </div>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Pildid lisatakse siia JavaScriptiga -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <button class="lightbox-nav lightbox-prev" onclick="previousImage()">‹</button>
+            <img id="lightbox-image" src="" alt="">
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">›</button>
+            <div class="lightbox-info" id="lightbox-info"></div>
+        </div>
+    </div>
+
+    <script>
+        // Piltide andmebaas kategooriate ja piltkidega
+        const photoDatabase = {
+            photos: [
+                {
+                    id: 1,
+                    src: "https://images.unsplash.com/photo-1452457807411-4979b707c5be?w=1200&h=800&fit=crop",
+                    alt: "Sügisene maastik",
+                    categories: ["landscapes"]
+                },
+                {
+                    id: 2,
+                    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&sat=-100",
+                    alt: "Mustvalge portree",
+                    categories: ["bw", "portraits"]
+                },
+                {
+                    id: 3,
+                    src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&h=800&fit=crop",
+                    alt: "Filmi esteetika",
+                    categories: ["film", "portraits"]
+                },
+                {
+                    id: 4,
+                    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&h=800&fit=crop",
+                    alt: "Naise portree",
+                    categories: ["portraits"]
+                },
+                {
+                    id: 5,
+                    src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=800&fit=crop",
+                    alt: "Tänava foto",
+                    categories: ["street"]
+                },
+                {
+                    id: 6,
+                    src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=800&fit=crop&sat=-100",
+                    alt: "Mustvalge maastik",
+                    categories: ["bw", "landscapes"]
+                },
+                {
+                    id: 7,
+                    src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1200&h=800&fit=crop",
+                    alt: "Filmi maastik",
+                    categories: ["film", "landscapes"]
+                },
+                {
+                    id: 8,
+                    src: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=1200&h=800&fit=crop",
+                    alt: "Tänava portree",
+                    categories: ["street", "portraits", "bw"]
+                },
+                {
+                    id: 9,
+                    src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=800&fit=crop",
+                    alt: "Metsatee",
+                    categories: ["landscapes", "film"]
+                },
+                {
+                    id: 10,
+                    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=800&fit=crop&sat=-100",
+                    alt: "Mustvalge mees",
+                    categories: ["bw", "portraits"]
+                },
+                {
+                    id: 11,
+                    src: "https://images.unsplash.com/photo-1514315384763-ba401779410f?w=1200&h=800&fit=crop",
+                    alt: "Öine tänav",
+                    categories: ["street", "film"]
+                },
+                {
+                    id: 12,
+                    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop",
+                    alt: "Mäed ja järv",
+                    categories: ["landscapes"]
+                }
+            ]
+        };
+
+        let currentAlbum = [];
+        let currentImageIndex = 0;
+
+        // Navigatsiooni funktsioonid
+        function showSection(sectionName) {
+            // Peida kõik sektsioonid
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('albums-section').classList.add('hidden');
+            document.getElementById('gallery-section').classList.add('hidden');
+            
+            // Näita valitud sektsioon
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Uuenda navigatsioonilinke
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Leia õige link ja märgi aktiivseks
+            if (sectionName === 'home') {
+                document.querySelector('.nav-links a:first-child').classList.add('active');
+            } else if (sectionName === 'albums') {
+                document.querySelector('.nav-links a:last-child').classList.add('active');
+            }
+        }
+
+        // Piltide filtreerimine kategooria järgi
+        function getPhotosByCategory(category) {
+            if (category === 'all') {
+                return photoDatabase.photos;
+            }
+            return photoDatabase.photos.filter(photo => photo.categories.includes(category));
+        }
+
+        // Albumi avamise funktsioon
+        function openAlbum(albumCategory) {
+            const photos = getPhotosByCategory(albumCategory);
+            currentAlbum = photos;
+            
+            // Uuenda galerii pealkirja
+            const albumTitle = getAlbumTitle(albumCategory);
+            document.getElementById('gallery-title').textContent = albumTitle;
+            
+            // Loo galerii
+            createGallery(photos);
+            
+            // Näita galerii sektsioon
+            showSection('gallery');
+        }
+
+        // Galerii loomine
+        function createGallery(photos) {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => openLightbox(index);
+                
+                const img = document.createElement('img');
+                img.src = photo.src;
+                img.alt = photo.alt;
+                img.loading = 'lazy';
+                
+                galleryItem.appendChild(img);
+                galleryGrid.appendChild(galleryItem);
+            });
+        }
+
+        // Lightbox funktsioonid
+        function openLightbox(imageIndex) {
+            currentImageIndex = imageIndex;
+            const photo = currentAlbum[imageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+            document.getElementById('lightbox').classList.add('active');
+            
+            // Keela body scrollimine
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentAlbum.length;
+            const photo = currentAlbum[currentImageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+        }
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + currentAlbum.length) % currentAlbum.length;
+            const photo = currentAlbum[currentImageIndex];
+            
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-image').alt = photo.alt;
+            document.getElementById('lightbox-info').textContent = photo.alt;
+        }
+
+        // Albumi pealkirja määramine
+        function getAlbumTitle(category) {
+            const titles = {
+                'all': 'Kõik Pildid',
+                'bw': 'Mustvalged',
+                'film': 'Filmifotod',
+                'portraits': 'Portreed',
+                'landscapes': 'Maastikud',
+                'street': 'Tänavafoto'
+            };
+            return titles[category] || 'Tundmatu album';
+        }
+
+        // Klaviatuuri navigatsioon lightbox'is
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    previousImage();
+                }
+            }
+        });
+
+        // Lightbox sulgemine klõpsuga taustal
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Smooth scroll animatsioonid
+        function addScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0.2s';
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Käivita animatsioonid lehe laadimisel
+        document.addEventListener('DOMContentLoaded', addScrollAnimations);
+
+        // Navigatsiooni läbipaistvuse muutmine scrollimisel
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Piltide eellaadimine parema jõudluse jaoks
+        function preloadImages() {
+            photoDatabase.photos.forEach(photo => {
+                const img = new Image();
+                img.src = photo.src;
+            });
+        }
+
+        // Käivita eellaadimine
+        window.addEventListener('load', preloadImages);
+    </script>
+</body>
+</html>
