@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fotoportfoolio</title>
+    <link rel="icon" href="https://pbs.twimg.com/media/G1zvDzlXcAA9bDe?format=png&name=small" type="image/x-icon">
+    <title>trolluollu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
     <style>
         * {
             margin: 0;
@@ -12,40 +15,25 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            background: #000000;
             color: #fff;
             min-height: 100vh;
             line-height: 1.6;
         }
 
-        /* Liquid Glass Efekt - Navigatsioon */
+        /* Flat Design Navigation */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: #94ff66;
+            color: #003401;
             border-radius: 0 0 20px 20px;
             padding: 1rem 2rem;
             z-index: 1000;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .navbar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .nav-container {
@@ -57,17 +45,11 @@
         }
 
         .logo {
-            color: #FF6600;
-            font-family: 'digital', sans-serif;
+            color: #003401;
+            font-family: 'Fira Code', monospace;
             font-size: 50px;
+            font-weight: 400;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
         }
 
         .nav-links {
@@ -76,87 +58,37 @@
             list-style: none;
         }
 
-        /* Liquid Glass Buttons */
-.nav-links a {
-            color: #fff;
+        .nav-links a {
+            color: #94ff66;
+            background: #003401;
             text-decoration: none;
             padding: 0.75rem 1.5rem;
             border-radius: 25px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 4px 16px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 25px;
-            opacity: 0;
-            transform: translateX(-100%);
-            transition: transform 0.5s ease, opacity 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            opacity: 1;
-            transform: translateX(0);
+            display: inline-block;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 900;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: #94ff66;
+            color: #003401;
         }
 
-        /* Liquid Glass Cards */
+        /* Flat Design Cards */
         .album-card {
             position: relative;
             aspect-ratio: 1;
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .album-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            z-index: 2;
+            transition: all 0.3s ease;
+            background: #222;
         }
 
         .album-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
         }
 
         .album-overlay {
@@ -164,96 +96,58 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.8);
             padding: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Liquid Glass Gallery Items */
+        /* Flat Design Gallery Items */
         .gallery-item {
             position: relative;
             aspect-ratio: 4/3;
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            z-index: 2;
+            transition: all 0.3s ease;
+            background: #222;
         }
 
         .gallery-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
         }
 
-        /* Liquid Glass Buttons */
+        /* Flat Design Buttons */
         .cta-button, .back-button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            color: white;
+            background: #94ff66;
+            color: #003401;
             text-decoration: none;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: none;
+            font-size: 1.3rem;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 900;
         }
 
-        .cta-button::before, .back-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .cta-button:hover::before, .back-button:hover::before {
-            left: 100%;
+        .back-button {
+            padding: 0.75rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            font-size: 1.5rem;
+            justify-content: center;
         }
 
         .cta-button:hover, .back-button:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 15px 40px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: #94ff66;
+            transform: translateY(-2px);
         }
 
-        /* Liquid Glass Lightbox */
+        /* Flat Design Lightbox */
         .lightbox {
             position: fixed;
             top: 0;
@@ -289,31 +183,27 @@
             max-height: 100%;
             object-fit: contain;
             border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .lightbox-close, .lightbox-nav {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #94ff66;
+            color: #003401;
+            border: none;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .lightbox-close {
             position: absolute;
             top: -50px;
             right: 0;
-            font-size: 2rem;
             width: 40px;
             height: 40px;
         }
@@ -322,21 +212,12 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.5rem;
             width: 50px;
             height: 50px;
         }
 
         .lightbox-close:hover, .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-            box-shadow: 
-                0 12px 40px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .lightbox-nav:hover {
-            transform: translateY(-50%) scale(1.1);
+            background: #94ff66;
         }
 
         .lightbox-prev {
@@ -355,10 +236,11 @@
             text-align: center;
             color: white;
             font-size: 1.1rem;
-         font-family: 'Times New Roman', Times, serif;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
         }
 
-        /* Pozostałe podstawowe style */
+        /* Basic Styles */
         .content {
             margin-top: 80px;
             padding: 2rem;
@@ -376,16 +258,16 @@
         }
 
         .hero h1 {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Fira Code', monospace;
             font-size: 3.5rem;
+            font-weight: 400;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
         }
 
         .hero p {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 100;
             font-size: 1.2rem;
             margin-bottom: 2rem;
             opacity: 0.8;
@@ -413,14 +295,16 @@
         }
 
         .album-title {
-            font-family: 'digital', sans-serif;
-            font-weight: normal;
+            font-family: 'Fira Code', monospace;
+            font-weight: 400;
             font-size: 1.5rem;
-            color: #FF6600;
+            color: #94ff66;
             margin-bottom: 0.5rem;
         }
 
         .album-subtitle {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
             opacity: 0.7;
             font-size: 0.9rem;
         }
@@ -434,6 +318,11 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+        }
+
+        .gallery-header .section-title {
+            margin-bottom: 0;
+            text-align: left;
         }
 
         .gallery-grid {
@@ -458,21 +347,18 @@
         }
 
         .section-title {
+            font-family: 'Fira Code', monospace;
             font-size: 2.5rem;
-            font-family: 'Times New Roman', Times, serif;
+            font-weight: 400;
             text-align: center;
             margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
                 padding: 1rem;
-                border-radius: 0 0 15px 15px;
             }
 
             .nav-links {
@@ -517,7 +403,6 @@
 
             .lightbox-content {
                 padding: 1rem;
-                border-radius: 15px;
             }
         }
 
@@ -537,25 +422,18 @@
                 transform: translateY(0);
             }
         }
-
-        @font-face {
-            font-family: 'digital';
-            src: url('fonts/digital.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
     </style>
 </head>
 <body>
-    <!-- Liquid Glass Navigation -->
+    <!-- Flat Design Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="showSection('home')">
-                TR
+                tr
             </div>
             <ul class="nav-links">
-                <li><a class="active" onclick="showSection('home')">Avaleht</a></li>
-                <li><a onclick="showSection('albums')">Fotoalbumid</a></li>
+                <li><a href="#" class="nav-btn active" data-section="home">TUTVUSTUS</a></li>
+                <li><a href="#" class="nav-btn" data-section="albums">ALBUMID</a></li>
             </ul>
         </div>
     </nav>
@@ -564,21 +442,27 @@
         <!-- Avaleht -->
         <section id="home-section" class="section">
             <div class="hero fade-in">
-                <h1>Tere tulemast</h1>
+                <h1>tšau!</h1>
                 <p>
-                    Olen kirjeldus endast - fotograaf, kes jäädvustab elu kauneid hetki. 
-                    Minu töö keskendub [lisa siia oma eriala/stiil], püüdes kinni 
-                    emotsioone ja lugusid, mis peituvad iga kaadri taga.
+                    Olen Oliver Tedvig. Väidetavalt ma "armastan" monteerimist, aga siiski vahel klõpsan ka fotosid. 
                 </p>
-                <div class="cta-button" onclick="showSection('albums')">
-                    Vaata minu tööd
-                </div>
+                <p>
+                    Eriti palju laristan ma raha filmile siis, kui monteerimine või graafiline disain mind närvi ajab. 
+                    Vahel pean ka arvutist puhkust saama, enne kui oma 10 aastat vana LCD monitori viimaks auguliseks löön. 
+                    Kõiki neid pilte, mida pärast närvipurset mööda Tallinna tegema olen läinud, saab siin näha.
+                </p>
+                <p>
+                    Mu lemmik kaamera on Nikon F60, ei hülga teda kunagi. Sinna sisse käib film, see on väga kallis.
+                </p>
+                <button class="cta-button" onclick="showSection('albums')">
+                    START
+                </button>
             </div>
         </section>
 
         <!-- Fotoalbumid -->
         <section id="albums-section" class="section hidden">
-            <h2 class="section-title fade-in">Fotoalbumid</h2>
+            <h2 class="section-title fade-in">fotoalbumid</h2>
             <div class="albums-grid fade-in">
                 
                 <!-- Album 1: Kõik pildid -->
@@ -586,7 +470,7 @@
                     <img src="https://images.unsplash.com/photo-1452457807411-4979b707c5be?w=600&h=600&fit=crop" 
                          alt="Kõik Pildid" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Kõik Pildid</h3>
+                        <h3 class="album-title">kõik pildid</h3>
                         <p class="album-subtitle">Täielik kollektsioon</p>
                     </div>
                 </div>
@@ -596,7 +480,7 @@
                     <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop&sat=-100" 
                          alt="Mustvalged" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Mustvalged</h3>
+                        <h3 class="album-title">mustvalged</h3>
                         <p class="album-subtitle">Klassikaline esteetika</p>
                     </div>
                 </div>
@@ -606,7 +490,7 @@
                     <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&h=600&fit=crop" 
                          alt="Filmifotod" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Filmifotod</h3>
+                        <h3 class="album-title">filmifotod</h3>
                         <p class="album-subtitle">Analoogse filmi võlu</p>
                     </div>
                 </div>
@@ -616,7 +500,7 @@
                     <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&fit=crop" 
                          alt="Portreed" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Portreed</h3>
+                        <h3 class="album-title">portreed</h3>
                         <p class="album-subtitle">Inimeste lood</p>
                     </div>
                 </div>
@@ -626,7 +510,7 @@
                     <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" 
                          alt="Maastikud" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Maastikud</h3>
+                        <h3 class="album-title">maastikud</h3>
                         <p class="album-subtitle">Looduse ilu</p>
                     </div>
                 </div>
@@ -636,7 +520,7 @@
                     <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=600&fit=crop" 
                          alt="Tänavafoto" class="album-cover">
                     <div class="album-overlay">
-                        <h3 class="album-title">Tänavafoto</h3>
+                        <h3 class="album-title">tänavafotod</h3>
                         <p class="album-subtitle">Linnaelu hetked</p>
                     </div>
                 </div>
@@ -649,9 +533,9 @@
             <div class="gallery-section">
                 <div class="gallery-header">
                     <h2 class="section-title" id="gallery-title">Galerii</h2>
-                    <div class="back-button" onclick="showSection('albums')">
-                        ← Tagasi albumitesse
-                    </div>
+                    <button class="back-button" onclick="showSection('albums')">
+                        ‹
+                    </button>
                 </div>
                 <div class="gallery-grid" id="gallery-grid">
                     <!-- Pildid lisatakse siia JavaScriptiga -->
@@ -660,7 +544,7 @@
         </section>
     </div>
 
-    <!-- Liquid Glass Lightbox -->
+    <!-- Flat Design Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
             <button class="lightbox-close" onclick="closeLightbox()">×</button>
@@ -753,7 +637,7 @@
         let currentAlbum = [];
         let currentImageIndex = 0;
 
-          // Navigatsiooni funktsioonid
+        // Navigatsiooni funktsioonid
         function showSection(sectionName) {
             // Peida kõik sektsioonid
             document.getElementById('home-section').classList.add('hidden');
@@ -764,17 +648,27 @@
             document.getElementById(sectionName + '-section').classList.remove('hidden');
             
             // Uuenda navigatsioonilinke
-            document.querySelectorAll('.nav-links a').forEach(link => {
+            document.querySelectorAll('.nav-btn').forEach(link => {
                 link.classList.remove('active');
             });
             
             // Leia õige link ja märgi aktiivseks
-            if (sectionName === 'home') {
-                document.querySelector('.nav-links a:first-child').classList.add('active');
-            } else if (sectionName === 'albums') {
-                document.querySelector('.nav-links a:last-child').classList.add('active');
+            const activeLink = document.querySelector(`[data-section="${sectionName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
             }
         }
+
+        // Lisa event listenerid navigatsiooninuppudele
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    showSection(section);
+                });
+            });
+        });
 
         // Piltide filtreerimine kategooria järgi
         function getPhotosByCategory(category) {
@@ -860,12 +754,12 @@
         // Albumi pealkirja määramine
         function getAlbumTitle(category) {
             const titles = {
-                'all': 'Kõik Pildid',
-                'bw': 'Mustvalged',
-                'film': 'Filmifotod',
-                'portraits': 'Portreed',
-                'landscapes': 'Maastikud',
-                'street': 'Tänavafoto'
+                'all': 'kõik pildid',
+                'bw': 'mustvalged',
+                'film': 'filmifotod',
+                'portraits': 'portreed',
+                'landscapes': 'maastikud',
+                'street': 'tänavafotod'
             };
             return titles[category] || 'Tundmatu album';
         }
@@ -913,16 +807,6 @@
 
         // Käivita animatsioonid lehe laadimisel
         document.addEventListener('DOMContentLoaded', addScrollAnimations);
-
-        // Navigatsiooni läbipaistvuse muutmine scrollimisel
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.15)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
-            }
-        });
 
         // Piltide eellaadimine parema jõudluse jaoks
         function preloadImages() {
